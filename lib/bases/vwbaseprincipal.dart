@@ -1,99 +1,106 @@
 import 'package:flutter/material.dart';
-import 'package:tec_me_subes/pantallas/pasajero/vwviajespasajero.dart';
 
-class VwBasePrincipal extends StatefulWidget {
-  final Widget child;
-  final String titulo;
-  final String subtitulo;
+class VWBasePrincipal extends StatefulWidget {
+  final String tituloPantalla;
+  final Widget cuerpoPantalla;
+  final int indiceInicial;
 
-  const VwBasePrincipal({
+  const VWBasePrincipal({
     super.key,
-    required this.child,
-    required this.titulo,
-    required this.subtitulo,
+    required this.tituloPantalla,
+    required this.cuerpoPantalla,
+    this.indiceInicial = 0,
   });
 
   @override
-  State<VwBasePrincipal> createState() => _VwBasePrincipalState();
+  State<VWBasePrincipal> createState() => _VWBasePrincipalState();
 }
 
-class _VwBasePrincipalState extends State<VwBasePrincipal> {
-  int _currentIndex = 0;
+class _VWBasePrincipalState extends State<VWBasePrincipal> {
+  late int _currentIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.indiceInicial;
+  }
+
+  void _onItemTapped(int index, BuildContext context) {
+    if (index == _currentIndex) return;
+    
+    setState(() => _currentIndex = index);
+    
+    switch(index) {
+      case 0:
+        Navigator.pushNamedAndRemoveUntil(
+          context, 
+          '/inicio-pasajero', 
+          (route) => false
+        );
+        break;
+      case 1:
+        Navigator.pushNamedAndRemoveUntil(
+          context, 
+          '/viajes-pasajero', 
+          (route) => false
+        );
+        break;
+      case 2:
+        Navigator.pushNamedAndRemoveUntil(
+          context, 
+          '/cuenta-pasajero', 
+          (route) => false
+        );
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          // Encabezado con logo y título
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
-            height: 140,
-            decoration: BoxDecoration(
-              color: Colors.blue[600],
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            height: 150,
+            color: Colors.blue,
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/ITP.png',
-                      width: 80,
-                      fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) {
-                        return _buildPlaceholder('ITP.png', 80);
-                      },
+                Image.asset(
+                  'assets/ITP.png',
+                  height: 100,
+                  width: 100,
+                  fit: BoxFit.contain,
+                ),
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      widget.tituloPantalla,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          widget.titulo,
-                          style: const TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          widget.subtitulo,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.white70,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Image.asset(
-                      'assets/TecMeSubes.jpg',
-                      width: 80,
-                      fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) {
-                        return _buildPlaceholder('TecMeSubes.jpg', 80);
-                      },
-                    ),
-                  ],
+                  ),
+                ),
+                Image.asset(
+                  'assets/TecMeSubes.jpg',
+                  height: 100,
+                  width: 100,
+                  fit: BoxFit.contain,
                 ),
               ],
             ),
           ),
-          
-          // Contenido principal desplazable
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-              child: widget.child,
-            ),
-          ),
+          Expanded(child: widget.cuerpoPantalla),
         ],
       ),
-      
-      // Barra de navegación inferior
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) => _onItemTapped(index, context),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -106,43 +113,6 @@ class _VwBasePrincipalState extends State<VwBasePrincipal> {
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
             label: 'Cuenta',
-          ),
-        ],
-        currentIndex: _currentIndex,
-        selectedItemColor: Colors.blue[800],
-        unselectedItemColor: Colors.grey,
-        onTap: (index) async {
-          if (index == _currentIndex) return;
-
-          if (index == 1) { // Botón de viajes
-            await Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => VwViajesPasajero(),
-              ),
-            );
-          }
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-      ),
-    );
-  }
-
-  // Widget para mostrar placeholder cuando falla la imagen
-  Widget _buildPlaceholder(String imageName, double size) {
-    return Container(
-      width: size,
-      height: size,
-      color: Colors.grey[200],
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.image_not_supported, size: 20, color: Colors.grey),
-          Text(
-            imageName,
-            style: const TextStyle(fontSize: 8, color: Colors.grey),
           ),
         ],
       ),

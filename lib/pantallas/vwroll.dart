@@ -41,7 +41,7 @@ class VwRoll extends StatelessWidget {
               title: 'Conductor',
               description: 'Conductor autorizado',
               color: Colors.grey[900]!,
-              onTap: () {}, 
+              onTap: () => _navigateToDriverHome(context), 
             ),
           ],
         ),
@@ -53,7 +53,16 @@ class VwRoll extends StatelessWidget {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const VwInicioPasajero(),
+        builder: (context) => const VWInicioPasajero(),
+      ),
+    );
+  }
+
+  void _navigateToDriverHome(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Pantalla de conductor en desarrollo'),
+        duration: Duration(seconds: 2),
       ),
     );
   }
@@ -73,7 +82,11 @@ class VwRoll extends StatelessWidget {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
-        onTap: onTap,
+        onTap: () {
+          // Feedback táctil
+          _vibrate();
+          onTap();
+        },
         child: Container(
           height: 220,
           decoration: BoxDecoration(
@@ -111,5 +124,11 @@ class VwRoll extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _vibrate() {
+    // Vibración al tocar (opcional)
+    // Requiere importar 'package:flutter/services.dart';
+    // HapticFeedback.lightImpact();
   }
 }
