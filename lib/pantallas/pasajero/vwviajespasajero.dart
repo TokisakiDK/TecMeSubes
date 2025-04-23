@@ -1,208 +1,290 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tec_me_subes/bases/vwbaseprincipal.dart';
 
-class VWViajesPasajero extends StatelessWidget {
+class VWViajesPasajero extends StatefulWidget {
   const VWViajesPasajero({super.key});
+
+  @override
+  State<VWViajesPasajero> createState() => _VWViajesPasajeroState();
+}
+
+class _VWViajesPasajeroState extends State<VWViajesPasajero> {
+  // Lista dinámica de viajes (ejemplo)
+  final List<Map<String, dynamic>> viajes = [
+    {
+      'hora': '12:30 p.m',
+      'inicio': 'Fraccionamiento Los Tuzos',
+      'destino': 'Instituto Tecnológico de Pachuca',
+      'conductor': 'Aaron González',
+      'vehiculo': 'Sentra rojo 2020',
+      'calificacion': 4.5,
+    },
+    {
+      'hora': '13:40 p.m',
+      'inicio': 'Villas de Pachuca',
+      'destino': 'Plaza Galerías',
+      'conductor': 'Carlos Sánchez',
+      'vehiculo': 'Aveo blanco 2010',
+      'calificacion': null, // Sin calificación aún
+    },
+  ];
+
+  int? viajeSeleccionadoIndex;
 
   @override
   Widget build(BuildContext context) {
     return VWBasePrincipal(
       tituloPantalla: 'Viajes Disponibles',
-      cuerpoPantalla: _buildBody(context),
+      cuerpoPantalla: _buildBody(),
       indiceInicial: 1,
     );
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody() {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildAvailableHeader(),
+            // Fila con "Disponibles" y fecha actual
+            _buildHeaderRow(),
             const SizedBox(height: 16),
-            _buildTripList(),
-            const SizedBox(height: 24),
-            _buildReviewSection(context),
+            
+            // Panel de viajes
+            _buildViajesPanel(),
+            
+            // Sección de valoración
+            _buildRatingSection(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildAvailableHeader() {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Disponibles',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(height: 4),
-        Text(
-          '01/04/25',
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.grey,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTripList() {
-    return Column(
-      children: [
-        _buildTripCard(
-          time: '12:30 p.m',
-          location: 'Fraccionamiento Los tuzos',
-          transport: 'ITP',
-          driver: 'Aaron Gonzalez',
-          vehicle: 'Sentra rojo 2020',
-        ),
-        const Divider(height: 32),
-        _buildTripCard(
-          time: '13:40 p.m',
-          location: 'Villas de Pachuca',
-          transport: 'ITP',
-          driver: 'Carlos Sánchez',
-          vehicle: 'Aveo blanco 2010',
-        ),
-        const Divider(height: 32),
-        _buildTripCard(
-          time: '09:12 a.m',
-          location: 'Por definir',
-          transport: 'ITP',
-          driver: 'Conductor por confirmar',
-          vehicle: 'Vehículo por confirmar',
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTripCard({
-    required String time,
-    required String location,
-    required String transport,
-    required String driver,
-    required String vehicle,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          time,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          location,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          transport,
-          style: const TextStyle(
-            fontSize: 14,
-            color: Colors.grey,
-          ),
-        ),
-        const SizedBox(height: 16),
-        Text(
-          driver,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          vehicle,
-          style: const TextStyle(
-            fontSize: 14,
-            color: Colors.grey,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildReviewSection(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _buildHeaderRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         const Text(
-          'Excelente servicio!',
+          'Disponibles',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 8),
-        const Text(
-          '[Nombre del conductor] fue muy amable y profesional durante todo el viaje. '
-          'El auto estaba limpio y en perfectas condiciones. '
-          'Condujo con seguridad y llegó puntual al destino. '
-          'Además, fue muy cordial y respetuoso. Sin duda, lo recomendaría '
-          'y volvería a viajar con él. ¡Gracias por una gran experiencia!',
+        Text(
+          DateFormat('dd/MM/yyyy').format(DateTime.now()),
           style: TextStyle(
             fontSize: 16,
-            height: 1.5,
-          ),
-        ),
-        const SizedBox(height: 16),
-        Align(
-          alignment: Alignment.centerRight,
-          child: ElevatedButton(
-            onPressed: () => _showAddCommentDialog(context),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
-            child: const Text('Agregar comentario'),
+            color: Colors.grey[600],
           ),
         ),
       ],
     );
   }
 
-  void _showAddCommentDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Agregar comentario'),
-        content: const TextField(
-          maxLines: 5,
-          decoration: InputDecoration(
-            hintText: 'Escribe tu comentario aquí...',
-            border: OutlineInputBorder(),
+  Widget _buildViajesPanel() {
+    return Card(
+      elevation: 3,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: viajes.isEmpty
+            ? const Center(
+                child: Text(
+                  'No hay viajes disponibles',
+                  style: TextStyle(fontSize: 16),
+                ),
+              )
+            : Column(
+                children: [
+                  ...viajes.asMap().entries.map((entry) {
+                    final index = entry.key;
+                    final viaje = entry.value;
+                    return Column(
+                      children: [
+                        _buildViajeCard(viaje, index),
+                        if (index != viajes.length - 1) 
+                          const Divider(height: 24),
+                      ],
+                    );
+                  }),
+                ],
+              ),
+      ),
+    );
+  }
+
+  Widget _buildViajeCard(Map<String, dynamic> viaje, int index) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          viajeSeleccionadoIndex = index;
+        });
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: viajeSeleccionadoIndex == index 
+              ? Colors.blue[50] 
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Hora del viaje
+            Text(
+              viaje['hora'],
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 12),
+            
+            // Panel de ruta (gris)
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      viaje['inicio'],
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    child: Icon(Icons.arrow_forward, size: 20),
+                  ),
+                  Expanded(
+                    child: Text(
+                      viaje['destino'],
+                      textAlign: TextAlign.end,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 12),
+            
+            // Info conductor y vehículo
+            Row(
+              children: [
+                const Icon(Icons.person, size: 20, color: Colors.blue),
+                const SizedBox(width: 8),
+                Text(viaje['conductor']),
+                const Spacer(),
+                const Icon(Icons.directions_car, size: 20, color: Colors.blue),
+                const SizedBox(width: 8),
+                Text(viaje['vehiculo']),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRatingSection() {
+    // Si no hay viaje seleccionado
+    if (viajeSeleccionadoIndex == null) {
+      return const Padding(
+        padding: EdgeInsets.only(top: 24),
+        child: Center(
+          child: Text(
+            'Sin viaje seleccionado',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey,
+            ),
           ),
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancelar'),
+      );
+    }
+
+    final viaje = viajes[viajeSeleccionadoIndex!];
+    final calificacion = viaje['calificacion'];
+    final nombreConductor = viaje['conductor'];
+    
+    return Padding(
+      padding: const EdgeInsets.only(top: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Valoración del conductor',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Comentario agregado')));
-            },
-            child: const Text('Publicar'),
+          const SizedBox(height: 12),
+          
+          // Fila con icono, nombre y calificación
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Icono del conductor
+              const Icon(Icons.person, size: 36, color: Colors.blue),
+              const SizedBox(width: 12),
+              
+              // Nombre del conductor
+              Text(
+                nombreConductor,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(width: 16),
+              
+              // Calificación con estrellas
+              if (calificacion != null) ...[
+                const Icon(Icons.star, color: Colors.amber, size: 24),
+                const SizedBox(width: 4),
+                Text(
+                  calificacion.toStringAsFixed(1),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const Text('/5', style: TextStyle(fontSize: 16)),
+              ] else ...[
+                const Text(
+                  'Sin valoración aún',
+                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                ),
+              ],
+            ],
           ),
+          
+          // Barra de progreso (si tiene calificación)
+          if (calificacion != null) ...[
+            const SizedBox(height: 8),
+            LinearProgressIndicator(
+              value: calificacion / 5,
+              backgroundColor: Colors.grey[200],
+              color: Colors.amber,
+              minHeight: 8,
+            ),
+          ],
         ],
       ),
     );
