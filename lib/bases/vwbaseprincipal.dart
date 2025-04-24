@@ -16,43 +16,61 @@ class VWBasePrincipal extends StatefulWidget {
   State<VWBasePrincipal> createState() => _VWBasePrincipalState();
 }
 
-class _VWBasePrincipalState extends State<VWBasePrincipal> {
+class _VWBasePrincipalState extends State<VWBasePrincipal> with TickerProviderStateMixin {
   late int _currentIndex;
+  late AnimationController _animationController;
+  late Animation<double> _fadeAnimation;
 
   @override
   void initState() {
     super.initState();
     _currentIndex = widget.indiceInicial;
+    
+    // Configuración de la animación
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeInOut,
+      ),
+    );
+    
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   void _onItemTapped(int index, BuildContext context) {
     if (index == _currentIndex) return;
     
-    setState(() => _currentIndex = index);
-    
-    switch(index) {
-      case 0:
-        Navigator.pushNamedAndRemoveUntil(
-          context, 
-          '/inicio-pasajero', 
-          (route) => false
-        );
-        break;
-      case 1:
-        Navigator.pushNamedAndRemoveUntil(
-          context, 
-          '/viajes-pasajero', 
-          (route) => false
-        );
-        break;
-      case 2:
-        Navigator.pushNamedAndRemoveUntil(
-          context, 
-          '/cuenta-pasajero', 
-          (route) => false
-        );
-        break;
-    }
+    // Inicia la animación de salida
+    _animationController.reverse().then((_) {
+      setState(() => _currentIndex = index);
+      
+      // Navegación con nombre
+      final routes = [
+        '/inicio-pasajero',
+        '/viajes-pasajero',
+        '/cuenta-pasajero',
+      ];
+      
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        routes[index],
+        (route) => false,
+      );
+      
+      // Inicia la animación de entrada
+      _animationController.forward();
+    });
   }
 
   @override
@@ -60,6 +78,7 @@ class _VWBasePrincipalState extends State<VWBasePrincipal> {
     return Scaffold(
       body: Column(
         children: [
+          // Panel azul superior (sin cambios)
           Container(
             height: 150,
             color: Colors.blue,
@@ -95,9 +114,18 @@ class _VWBasePrincipalState extends State<VWBasePrincipal> {
               ],
             ),
           ),
-          Expanded(child: widget.cuerpoPantalla),
+          
+          // Cuerpo con animación de fade
+          Expanded(
+            child: FadeTransition(
+              opacity: _fadeAnimation,
+              child: widget.cuerpoPantalla,
+            ),
+          ),
         ],
       ),
+      
+      // Barra de navegación inferior (sin cambios)
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) => _onItemTapped(index, context),

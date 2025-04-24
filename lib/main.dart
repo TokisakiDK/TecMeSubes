@@ -1,12 +1,13 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:tec_me_subes/pantallas/pasajero/vwInicioPasajero.dart';
 import 'package:tec_me_subes/pantallas/pasajero/vwcuentapasajero.dart';
-import 'package:tec_me_subes/pantallas/pasajero/vwiniciopasajero.dart';
 import 'package:tec_me_subes/pantallas/pasajero/vwviajespasajero.dart';
 import 'package:tec_me_subes/pantallas/sesion/vwiniciosesion.dart';
 import 'package:tec_me_subes/pantallas/sesion/vwpassword.dart' show VwContrasena;
 import 'package:tec_me_subes/pantallas/sesion/vwregistro.dart';
-import 'package:tec_me_subes/pantallas/vwroll.dart' show VwRoll;
+import 'package:tec_me_subes/pantallas/sesion/vwroll.dart' show VwRoll;
 import 'package:tec_me_subes/pantallas/vwvehiculo.dart' show VwVehiculo;
 
 void main() {

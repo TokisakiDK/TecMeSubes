@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show BorderRadius, BoxDecoration, BuildContext, Card, Color, Colors, Column, Container, EdgeInsets, FontWeight, Icon, IconData, Icons, InkWell, MainAxisAlignment, MainAxisSize, MaterialPageRoute, Navigator, Padding, RoundedRectangleBorder, ScaffoldMessenger, SingleChildScrollView, SizedBox, SnackBar, StatelessWidget, Text, TextAlign, TextStyle, VoidCallback, Widget;
 import 'package:tec_me_subes/bases/vwbase.dart';
-import 'package:tec_me_subes/pantallas/pasajero/vwiniciopasajero.dart';
+import 'package:tec_me_subes/pantallas/pasajero/vwInicioPasajero.dart';
 
 class VwRoll extends StatelessWidget {
   const VwRoll({super.key});
