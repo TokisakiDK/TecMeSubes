@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart' show BorderRadius, BoxDecoration, BuildContext, Card, Color, Colors, Column, Container, EdgeInsets, FontWeight, Icon, IconData, Icons, InkWell, MainAxisAlignment, MainAxisSize, MaterialPageRoute, Navigator, Padding, RoundedRectangleBorder, ScaffoldMessenger, SingleChildScrollView, SizedBox, SnackBar, StatelessWidget, Text, TextAlign, TextStyle, VoidCallback, Widget;
+import 'package:flutter/material.dart';
 import 'package:tec_me_subes/bases/vwbase.dart';
 import 'package:tec_me_subes/pantallas/pasajero/vwInicioPasajero.dart';
+import 'package:tec_me_subes/pantallas/vwvehiculo.dart';
 
 class VwRoll extends StatelessWidget {
   const VwRoll({super.key});
@@ -41,7 +42,7 @@ class VwRoll extends StatelessWidget {
               title: 'Conductor',
               description: 'Conductor autorizado',
               color: Colors.grey[900]!,
-              onTap: () => _navigateToDriverHome(context), 
+              onTap: () => _navigateToVehicleRegistration(context),
             ),
           ],
         ),
@@ -58,11 +59,11 @@ class VwRoll extends StatelessWidget {
     );
   }
 
-  void _navigateToDriverHome(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Pantalla de conductor en desarrollo'),
-        duration: Duration(seconds: 2),
+  void _navigateToVehicleRegistration(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const VwVehiculo(),
       ),
     );
   }
@@ -82,11 +83,7 @@ class VwRoll extends StatelessWidget {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
-        onTap: () {
-          // Feedback táctil
-          _vibrate();
-          onTap();
-        },
+        onTap: onTap,
         child: Container(
           height: 220,
           decoration: BoxDecoration(
@@ -124,11 +121,5 @@ class VwRoll extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _vibrate() {
-    // Vibración al tocar (opcional)
-    // Requiere importar 'package:flutter/services.dart';
-    // HapticFeedback.lightImpact();
   }
 }

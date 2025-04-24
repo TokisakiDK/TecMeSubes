@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tec_me_subes/bases/vwbase.dart' show VwBase;
+import 'package:tec_me_subes/bases/vwbase.dart';
+import 'package:tec_me_subes/pantallas/conductor/vwInicioConductor.dart';
 
 class VwVehiculo extends StatefulWidget {
   const VwVehiculo({super.key});
@@ -9,7 +10,7 @@ class VwVehiculo extends StatefulWidget {
 }
 
 class _VwVehiculoState extends State<VwVehiculo> {
-  String? _tipoVehiculo; // 'carro' o 'moto'
+  String? _tipoVehiculo;
   final _marcaController = TextEditingController();
   final _modeloController = TextEditingController();
   final _colorController = TextEditingController();
@@ -45,13 +46,27 @@ class _VwVehiculoState extends State<VwVehiculo> {
       return;
     }
 
-    // Aquí iría la lógica para guardar el vehículo en la cuenta del conductor
+    // Guardar datos del vehículo (simulado)
+    final vehiculoData = {
+      'tipo': _tipoVehiculo,
+      'marca': _marcaController.text,
+      'modelo': _modeloController.text,
+      'color': _colorController.text,
+      'placas': _placasController.text,
+      'capacidad': _capacidad,
+    };
+
+    // Navegar a pantalla de inicio del conductor
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const VWInicioConductor(),
+      ),
+    );
+
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Vehículo registrado exitosamente')),
     );
-
-    // Navegar a pantalla principal del conductor
-    Navigator.pushReplacementNamed(context, '/conductor');
   }
 
   @override
@@ -69,10 +84,8 @@ class _VwVehiculoState extends State<VwVehiculo> {
             ),
             const SizedBox(height: 20),
             
-            // Selección de tipo de vehículo
             Row(
               children: [
-                // Panel Carro
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
@@ -104,7 +117,6 @@ class _VwVehiculoState extends State<VwVehiculo> {
                   ),
                 ),
                 
-                // Panel Moto
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
@@ -139,7 +151,6 @@ class _VwVehiculoState extends State<VwVehiculo> {
             ),
             const SizedBox(height: 30),
             
-            // Formulario de vehículo
             if (_tipoVehiculo != null) ...[
               Container(
                 padding: const EdgeInsets.all(20),
@@ -149,7 +160,6 @@ class _VwVehiculoState extends State<VwVehiculo> {
                 ),
                 child: Column(
                   children: [
-                    // Marca
                     TextFormField(
                       controller: _marcaController,
                       decoration: const InputDecoration(
@@ -159,7 +169,6 @@ class _VwVehiculoState extends State<VwVehiculo> {
                     ),
                     const SizedBox(height: 20),
                     
-                    // Modelo
                     TextFormField(
                       controller: _modeloController,
                       decoration: const InputDecoration(
@@ -169,7 +178,6 @@ class _VwVehiculoState extends State<VwVehiculo> {
                     ),
                     const SizedBox(height: 20),
                     
-                    // Color
                     TextFormField(
                       controller: _colorController,
                       decoration: const InputDecoration(
@@ -179,7 +187,6 @@ class _VwVehiculoState extends State<VwVehiculo> {
                     ),
                     const SizedBox(height: 20),
                     
-                    // Placas
                     TextFormField(
                       controller: _placasController,
                       decoration: const InputDecoration(
@@ -189,7 +196,6 @@ class _VwVehiculoState extends State<VwVehiculo> {
                     ),
                     const SizedBox(height: 20),
                     
-                    // Capacidad (solo para carro)
                     if (_tipoVehiculo == 'carro')
                       DropdownButtonFormField<int>(
                         value: _capacidad,
@@ -208,12 +214,6 @@ class _VwVehiculoState extends State<VwVehiculo> {
                             _capacidad = value;
                           });
                         },
-                        validator: (value) {
-                          if (value == null) {
-                            return 'Seleccione la capacidad';
-                          }
-                          return null;
-                        },
                       ),
                     
                     if (_tipoVehiculo == 'moto')
@@ -226,7 +226,6 @@ class _VwVehiculoState extends State<VwVehiculo> {
               ),
               const SizedBox(height: 30),
               
-              // Botón de registro
               SizedBox(
                 width: double.infinity,
                 height: 50,

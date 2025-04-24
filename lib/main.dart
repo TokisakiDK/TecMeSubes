@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:tec_me_subes/pantallas/conductor/vwcuentaconductor.dart';
+import 'package:tec_me_subes/pantallas/conductor/vwinicioconductor.dart';
+import 'package:tec_me_subes/pantallas/conductor/wvviajesconductor.dart';
 import 'package:tec_me_subes/pantallas/pasajero/vwInicioPasajero.dart';
 import 'package:tec_me_subes/pantallas/pasajero/vwbuscar.dart';
 import 'package:tec_me_subes/pantallas/pasajero/vwcuentapasajero.dart';
@@ -46,6 +49,9 @@ class TecMeSubesApp extends StatelessWidget {
         '/cuenta-pasajero': (context) => const VWCuentaPasajero(),
         '/buscar': (context) => const VWBuscar(),
         '/crear-viaje': (context) => const VWPedirViaje(),
+        '/inicio-conductor': (context) => const VWInicioConductor(),
+        '/viajes-conductor': (context) => const VWViajesConductor(),
+        '/cuenta-conductor': (context) => const VWCuentaConductor(),
       },
       onUnknownRoute: (settings) => MaterialPageRoute(
         builder: (context) => Scaffold(
