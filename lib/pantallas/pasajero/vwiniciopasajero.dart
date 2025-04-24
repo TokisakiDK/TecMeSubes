@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tec_me_subes/bases/vwbaseprincipal.dart';
+import 'package:tec_me_subes/pantallas/pasajero/vwbuscar.dart';
 
 class VWInicioPasajero extends StatelessWidget {
   const VWInicioPasajero({super.key});
@@ -49,13 +50,18 @@ class VWInicioPasajero extends StatelessWidget {
             ),
           ),
           ElevatedButton.icon(
-            onPressed: () => _showLaterOptions(context),
-            icon: const Icon(Icons.calendar_today, size: 18),
-            label: const Text('Más tarde'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const VWBuscar()),
+             );
+           },
+           icon: const Icon(Icons.calendar_today, size: 18),
+           label: const Text('Más tarde'),
+           style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
               ),
             ),
           ),
@@ -64,29 +70,6 @@ class VWInicioPasajero extends StatelessWidget {
     );
   }
 
-  void _showLaterOptions(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Programar viaje'),
-        content: const Text('Seleccione fecha y hora para su viaje'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancelar'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Viaje programado')));
-            },
-            child: const Text('Confirmar'),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _buildSuggestionsHeader() {
     return Row(

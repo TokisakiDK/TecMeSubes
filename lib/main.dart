@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:tec_me_subes/pantallas/pasajero/vwInicioPasajero.dart';
+import 'package:tec_me_subes/pantallas/pasajero/vwbuscar.dart';
 import 'package:tec_me_subes/pantallas/pasajero/vwcuentapasajero.dart';
+import 'package:tec_me_subes/pantallas/pasajero/vwpedirviaje.dart';
 import 'package:tec_me_subes/pantallas/pasajero/vwviajespasajero.dart';
 import 'package:tec_me_subes/pantallas/sesion/vwiniciosesion.dart';
 import 'package:tec_me_subes/pantallas/sesion/vwpassword.dart' show VwContrasena;
@@ -42,6 +44,8 @@ class TecMeSubesApp extends StatelessWidget {
         '/inicio-pasajero': (context) => const VWInicioPasajero(),
         '/viajes-pasajero': (context) => const VWViajesPasajero(),
         '/cuenta-pasajero': (context) => const VWCuentaPasajero(),
+        '/buscar': (context) => const VWBuscar(),
+        '/crear-viaje': (context) => const VWPedirViaje(),
       },
       onUnknownRoute: (settings) => MaterialPageRoute(
         builder: (context) => Scaffold(
