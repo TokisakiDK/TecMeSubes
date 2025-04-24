@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:tec_me_subes/bases/vwbaseprincipal.dart';
+import 'package:tec_me_subes/bases/vwbasepasajero.dart';
 
 class VWCuentaPasajero extends StatelessWidget {
   const VWCuentaPasajero({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return VWBasePrincipal(
+    return VWBasePasajero(
       tituloPantalla: 'Mi Cuenta',
       cuerpoPantalla: _buildAccountBody(context),
       indiceInicial: 2,

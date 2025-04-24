@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tec_me_subes/bases/vwbaseprincipal.dart';
+import 'package:tec_me_subes/bases/vwbasepasajero.dart';
 
 class VWViajesPasajero extends StatefulWidget {
   const VWViajesPasajero({super.key});
@@ -34,7 +34,7 @@ class _VWViajesPasajeroState extends State<VWViajesPasajero> {
 
   @override
   Widget build(BuildContext context) {
-    return VWBasePrincipal(
+    return VWBasePasajero(
       tituloPantalla: 'Viajes Disponibles',
       cuerpoPantalla: _buildBody(),
       indiceInicial: 1,

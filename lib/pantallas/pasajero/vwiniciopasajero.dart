@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tec_me_subes/bases/vwbaseprincipal.dart';
+import 'package:tec_me_subes/bases/vwbasepasajero.dart';
 import 'package:tec_me_subes/pantallas/pasajero/vwbuscar.dart';
 
 class VWInicioPasajero extends StatelessWidget {
@@ -7,7 +7,7 @@ class VWInicioPasajero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VWBasePrincipal(
+    return VWBasePasajero(
       tituloPantalla: 'Inicio Pasajero',
       cuerpoPantalla: _buildBody(context),
       indiceInicial: 0,

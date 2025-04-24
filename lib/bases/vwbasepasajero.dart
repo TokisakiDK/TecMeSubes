@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class VWBasePrincipal extends StatefulWidget {
+class VWBasePasajero extends StatefulWidget {
   final String tituloPantalla;
   final Widget cuerpoPantalla;
   final int indiceInicial;
 
-  const VWBasePrincipal({
+  const VWBasePasajero({
     super.key,
     required this.tituloPantalla,
     required this.cuerpoPantalla,
@@ -13,10 +13,10 @@ class VWBasePrincipal extends StatefulWidget {
   });
 
   @override
-  State<VWBasePrincipal> createState() => _VWBasePrincipalState();
+  State<VWBasePasajero> createState() => _VWBasePrincipalState();
 }
 
-class _VWBasePrincipalState extends State<VWBasePrincipal> with TickerProviderStateMixin {
+class _VWBasePrincipalState extends State<VWBasePasajero> with TickerProviderStateMixin {
   late int _currentIndex;
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
