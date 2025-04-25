@@ -5,10 +5,12 @@ import 'package:tec_me_subes/pantallas/conductor/vwcuentaconductor.dart';
 import 'package:tec_me_subes/pantallas/conductor/vwinicioconductor.dart';
 import 'package:tec_me_subes/pantallas/conductor/wvviajesconductor.dart';
 import 'package:tec_me_subes/pantallas/pasajero/vwInicioPasajero.dart';
+import 'package:tec_me_subes/pantallas/pasajero/vwagregarfondos.dart';
 import 'package:tec_me_subes/pantallas/pasajero/vwbuscar.dart';
 import 'package:tec_me_subes/pantallas/pasajero/vwcuentapasajero.dart';
 import 'package:tec_me_subes/pantallas/pasajero/vwpedirviaje.dart';
 import 'package:tec_me_subes/pantallas/pasajero/vwviajespasajero.dart';
+import 'package:tec_me_subes/pantallas/sesion/vwbienveinida.dart';
 import 'package:tec_me_subes/pantallas/sesion/vwiniciosesion.dart';
 import 'package:tec_me_subes/pantallas/sesion/vwpassword.dart' show VwContrasena;
 import 'package:tec_me_subes/pantallas/sesion/vwregistro.dart';
@@ -37,8 +39,10 @@ class TecMeSubesApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      initialRoute: '/inicio-sesion',
+      initialRoute: '/bienvenida',
       routes: {
+        
+        '/bienvenida': (context) => const VwBienvenida(),
         '/inicio-sesion': (context) => const VwInicioSesion(),
         '/registro': (context) => const VwRegistro(),
         '/recuperar-contrasena': (context) => const VwContrasena(),
@@ -47,6 +51,7 @@ class TecMeSubesApp extends StatelessWidget {
         '/inicio-pasajero': (context) => const VWInicioPasajero(),
         '/viajes-pasajero': (context) => const VWViajesPasajero(),
         '/cuenta-pasajero': (context) => const VWCuentaPasajero(),
+        '/fondos': (context) => const Vwagregarfondos(),
         '/buscar': (context) => const VWBuscar(),
         '/crear-viaje': (context) => const VWPedirViaje(),
         '/inicio-conductor': (context) => const VWInicioConductor(),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tec_me_subes/bases/vwbasepasajero.dart';
 
+
 class VWCuentaPasajero extends StatelessWidget {
   const VWCuentaPasajero({super.key});
 
@@ -63,22 +64,47 @@ class VWCuentaPasajero extends StatelessWidget {
           title: 'Historial de viajes',
           onTap: () => _showComingSoon(context),
         ),
-        _buildAccountOption(
+       _buildAccountOption(
           icon: Icons.credit_card,
-          title: 'Métodos de pago',
-          onTap: () => _showComingSoon(context),
+          title: 'Agregar fondos',
+          onTap: () => Navigator.pushNamed(context, '/fondos'),
         ),
-        _buildAccountOption(
+       _buildAccountOption(
           icon: Icons.notifications,
           title: 'Notificaciones',
-          onTap: () => _showComingSoon(context),
+          onTap: () => _mostrarDialogoNotificaciones(context),
         ),
         _buildAccountOption(
           icon: Icons.settings,
-          title: 'Configuración',
+          title: 'Eliminar cuenta',
           onTap: () => _showComingSoon(context),
         ),
       ],
+    );
+  }
+
+   void _mostrarDialogoNotificaciones(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Notificaciones'),
+        content: const Text('¿Deseas desactivar las notificaciones?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Notificaciones desactivadas')),
+              );
+            },
+            child: const Text('Aceptar'),
+          ),
+        ],
+      ),
     );
   }
 
